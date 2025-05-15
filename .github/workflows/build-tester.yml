@@ -28,7 +28,7 @@ jobs:
         run: |
           echo "Starting loop to run main.js repeatedly for up to 10 minutes..."
           START_TIME=$(date +%s)
-          TIMEOUT=$((60 * 1)) # 10 minutes in seconds
+          TIMEOUT=$((60 * 10)) # 10 minutes in seconds
 
           while true; do
             echo "Running main.js..."
@@ -50,24 +50,6 @@ jobs:
           path: |
             screenshot1.png
             screenshot2.png
-
-      - name: Install jq
-        run: sudo apt-get install -y jq
-
-      - name: Delete Old Workflow Runs
-        run: |
-          echo "Fetching old workflow runs..."
-          RUNS=$(curl -s -H "Authorization: token ${{ secrets.GH_PAT }}" -H "Accept: application/vnd.github+json" \
-            "https://api.github.com/repos/${{ github.repository }}/actions/workflows/Traffic-1.yml/runs?per_page=100" | \
-            jq -r '.workflow_runs[] | select(.name == "Traffic-1") | .id')
-
-          for RUN_ID in $RUNS; do
-            if [ "$RUN_ID" != "${{ github.run_id }}" ]; then
-              echo "Deleting workflow run ID: $RUN_ID"
-              curl -X DELETE -H "Authorization: token ${{ secrets.GH_PAT }}" -H "Accept: application/vnd.github+json" \
-                "https://api.github.com/repos/${{ github.repository }}/actions/runs/$RUN_ID"
-            fi
-          done
 
       - name: Re-trigger This Workflow
         run: |

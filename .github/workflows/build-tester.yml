@@ -28,7 +28,7 @@ jobs:
         run: |
           echo "Starting loop to run main.js repeatedly for up to 10 minutes..."
           START_TIME=$(date +%s)
-          TIMEOUT=$((60 * 10)) # 10 minutes in seconds
+          TIMEOUT=$((60 * 1)) # 10 minutes in seconds
 
           while true; do
             echo "Running main.js..."

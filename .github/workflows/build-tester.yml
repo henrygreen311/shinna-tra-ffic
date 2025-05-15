@@ -1,0 +1,72 @@
+name: Traffic-1
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-traffic:
+    runs-on: ubuntu-latest
+    env:
+      DISPLAY: ':99.0'
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Start Xvfb (Simulate GUI)
+        run: Xvfb :99 -screen 0 1920x1080x24 &
+
+      - name: Install Chromium Browser
+        run: sudo apt-get install -y chromium-browser
+
+      - name: Install Playwright with Firefox
+        run: |
+          npm install playwright
+          npx playwright install firefox
+
+      - name: Display Current IP
+        run: curl https://api.ipify.org
+
+      - name: Run Main Script in Loop Until Timeout
+        run: |
+          echo "Starting loop to run main.js repeatedly for up to 10 minutes..."
+          START_TIME=$(date +%s)
+          TIMEOUT=$((60 * 10)) # 10 minutes in seconds
+
+          while true; do
+            echo "Running main.js..."
+            node main.js || echo "main.js exited with non-zero, continuing..."
+            CURRENT_TIME=$(date +%s)
+            ELAPSED=$((CURRENT_TIME - START_TIME))
+            if [ "$ELAPSED" -ge "$TIMEOUT" ]; then
+              echo "Reached 10 minutes. Triggering workflow rerun..."
+              break
+            fi
+            echo "Sleeping 20 seconds before next run..."
+            sleep 20
+          done
+
+      - name: Install jq
+        run: sudo apt-get install -y jq
+
+      - name: Delete Old Workflow Runs
+        run: |
+          echo "Fetching old workflow runs..."
+          RUNS=$(curl -s -H "Authorization: token ${{ secrets.GH_PAT }}" -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/actions/workflows/build-tester.yml/runs?per_page=100" | \
+            jq -r '.workflow_runs[] | select(.name == "Traffic") | .id')
+
+          for RUN_ID in $RUNS; do
+            if [ "$RUN_ID" != "${{ github.run_id }}" ]; then
+              echo "Deleting workflow run ID: $RUN_ID"
+              curl -X DELETE -H "Authorization: token ${{ secrets.GH_PAT }}" -H "Accept: application/vnd.github+json" \
+                "https://api.github.com/repos/${{ github.repository }}/actions/runs/$RUN_ID"
+            fi
+          done
+
+      - name: Re-trigger This Workflow
+        run: |
+          echo "Re-triggering this workflow..."
+          curl -X POST -H "Authorization: token ${{ secrets.GH_PAT }}" -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/actions/workflows/build-tester.yml/dispatches" \
+            -d "{\"ref\":\"${{ github.ref_name }}\"}"

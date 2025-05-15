@@ -95,7 +95,7 @@ async function spoofDetection(page) {
   });
 }
 
-async function interactWithUrl(context, url, screenshotPath) {
+async function interactWithUrl(context, url) {
   const page = await context.newPage();
   await spoofDetection(page);
 
@@ -116,9 +116,6 @@ async function interactWithUrl(context, url, screenshotPath) {
 
     await closePopups(page);
 
-    await page.screenshot({ path: screenshotPath, fullPage: true });
-    console.log(`Screenshot saved: ${screenshotPath}`);
-
     await delay(10000);
   } catch (e) {
     console.error(`Error on ${url}:`, e.message);
@@ -138,9 +135,8 @@ async function interactWithUrl(context, url, screenshotPath) {
 
   console.log(`Using User-Agent: ${userAgent}`);
 
-  await interactWithUrl(context, 'https://otieu.com/4/9334887', 'screenshot1.png');
-  await interactWithUrl(context, 'https://otieu.com/4/9334857', 'screenshot2.png');
+  await interactWithUrl(context, 'https://otieu.com/4/9334887');
+  await interactWithUrl(context, 'https://otieu.com/4/9334857');
 
   await context.close();
-  console.log('Browser closed.');
 })();

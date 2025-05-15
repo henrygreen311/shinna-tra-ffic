@@ -95,7 +95,7 @@ async function spoofDetection(page) {
   });
 }
 
-async function interactWithUrl(context, url) {
+async function interactWithUrl(context, url, screenshotPath) {
   const page = await context.newPage();
   await spoofDetection(page);
 
@@ -116,6 +116,9 @@ async function interactWithUrl(context, url) {
 
     await closePopups(page);
 
+    await page.screenshot({ path: screenshotPath, fullPage: true });
+    console.log(`Screenshot saved: ${screenshotPath}`);
+
     await delay(10000);
   } catch (e) {
     console.error(`Error on ${url}:`, e.message);
@@ -135,8 +138,9 @@ async function interactWithUrl(context, url) {
 
   console.log(`Using User-Agent: ${userAgent}`);
 
-  await interactWithUrl(context, 'https://www.profitableratecpm.com/j6fq2r6q?key=66cd4352f688d2ce519b42fbaea5055a');
-  await interactWithUrl(context, 'https://otieu.com/4/9334857');
+  await interactWithUrl(context, 'https://www.profitableratecpm.com/j6fq2r6q?key=66cd4352f688d2ce519b42fbaea5055a', 'screenshot1.png');
+  await interactWithUrl(context, 'https://otieu.com/4/9334857', 'screenshot2.png');
 
   await context.close();
+  console.log('Browser closed.');
 })();

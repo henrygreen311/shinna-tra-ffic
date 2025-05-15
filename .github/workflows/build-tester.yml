@@ -43,6 +43,14 @@ jobs:
             sleep 20
           done
 
+      - name: Upload Screenshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: page-screenshots
+          path: |
+            screenshot1.png
+            screenshot2.png
+
       - name: Install jq
         run: sudo apt-get install -y jq
 
@@ -50,8 +58,8 @@ jobs:
         run: |
           echo "Fetching old workflow runs..."
           RUNS=$(curl -s -H "Authorization: token ${{ secrets.GH_PAT }}" -H "Accept: application/vnd.github+json" \
-            "https://api.github.com/repos/${{ github.repository }}/actions/workflows/build-tester.yml/runs?per_page=100" | \
-            jq -r '.workflow_runs[] | select(.name == "Traffic") | .id')
+            "https://api.github.com/repos/${{ github.repository }}/actions/workflows/Traffic-1.yml/runs?per_page=100" | \
+            jq -r '.workflow_runs? // [] | select(.name == "Traffic-1") | .id')
 
           for RUN_ID in $RUNS; do
             if [ "$RUN_ID" != "${{ github.run_id }}" ]; then
@@ -65,13 +73,5 @@ jobs:
         run: |
           echo "Re-triggering this workflow..."
           curl -X POST -H "Authorization: token ${{ secrets.GH_PAT }}" -H "Accept: application/vnd.github+json" \
-            "https://api.github.com/repos/${{ github.repository }}/actions/workflows/build-tester.yml/dispatches" \
+            "https://api.github.com/repos/${{ github.repository }}/actions/workflows/Traffic-1.yml/dispatches" \
             -d "{\"ref\":\"${{ github.ref_name }}\"}"
-
-      - name: Upload Screenshots
-        uses: actions/upload-artifact@v4
-        with:
-          name: page-screenshots
-          path: |
-            screenshot1.png
-            screenshot2.png

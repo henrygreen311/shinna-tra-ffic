@@ -16,8 +16,6 @@ jobs:
       - name: Start Xvfb (Simulate GUI)
         run: Xvfb :99 -screen 0 1920x1080x24 &
 
-      - name: Install Chromium Browser
-        run: sudo apt-get install -y chromium-browser
 
       - name: Install Playwright with Firefox
         run: |

@@ -16,7 +16,6 @@ jobs:
       - name: Start Xvfb (Simulate GUI)
         run: Xvfb :99 -screen 0 1920x1080x24 &
 
-
       - name: Install Playwright with Firefox
         run: |
           npm install playwright
@@ -68,3 +67,11 @@ jobs:
           curl -X POST -H "Authorization: token ${{ secrets.GH_PAT }}" -H "Accept: application/vnd.github+json" \
             "https://api.github.com/repos/${{ github.repository }}/actions/workflows/build-tester.yml/dispatches" \
             -d "{\"ref\":\"${{ github.ref_name }}\"}"
+
+      - name: Upload Screenshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: page-screenshots
+          path: |
+            screenshot1.png
+            screenshot2.png

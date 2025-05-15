@@ -138,7 +138,7 @@ async function interactWithUrl(context, url, screenshotPath) {
 
   console.log(`Using User-Agent: ${userAgent}`);
 
-  await interactWithUrl(context, 'https://www.profitableratecpm.com/j6fq2r6q?key=66cd4352f688d2ce519b42fbaea5055a', 'screenshot1.png');
+  await interactWithUrl(context, 'https://otieu.com/4/9334887', 'screenshot1.png');
   await interactWithUrl(context, 'https://otieu.com/4/9334857', 'screenshot2.png');
 
   await context.close();

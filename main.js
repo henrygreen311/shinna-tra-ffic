@@ -14,10 +14,8 @@ function getRandomUserAgent(filePath) {
 const delay = ms => new Promise(res => setTimeout(res, ms));
 const randomBetween = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
-// Enhanced anti-detection with canvas spoofing and realistic browser properties
 async function spoofDetection(page) {
   await page.addInitScript(() => {
-    // Spoof webdriver and other bot detection properties
     Object.defineProperty(navigator, 'webdriver', { get: () => false });
     Object.defineProperty(navigator, 'languages', { get: () => ['en-US', 'en'] });
     Object.defineProperty(navigator, 'platform', { get: () => 'Win32' });
@@ -25,7 +23,6 @@ async function spoofDetection(page) {
     Object.defineProperty(navigator, 'hardwareConcurrency', { get: () => randomBetween(2, 8) });
     Object.defineProperty(navigator, 'deviceMemory', { get: () => randomBetween(4, 16) });
 
-    // Realistic plugins
     Object.defineProperty(navigator, 'plugins', {
       get: () => [
         { name: 'PDF Viewer', filename: 'internal-pdf-viewer', description: 'Portable Document Format' },
@@ -35,7 +32,6 @@ async function spoofDetection(page) {
 
     window.chrome = { runtime: {}, app: {} };
 
-    // Spoof canvas fingerprint
     const originalGetContext = HTMLCanvasElement.prototype.getContext;
     HTMLCanvasElement.prototype.getContext = function (type) {
       const context = originalGetContext.apply(this, arguments);
@@ -45,7 +41,7 @@ async function spoofDetection(page) {
           const imageData = originalGetImageData.apply(this, arguments);
           const data = imageData.data;
           for (let i = 0; i < data.length; i += 4) {
-            data[i] += Math.floor(Math.random() * 3) - 1; // Slight RGB noise
+            data[i] += Math.floor(Math.random() * 3) - 1;
             data[i + 1] += Math.floor(Math.random() * 3) - 1;
             data[i + 2] += Math.floor(Math.random() * 3) - 1;
           }
@@ -55,40 +51,35 @@ async function spoofDetection(page) {
       return context;
     };
 
-    // Spoof WebGL
     const getParameter = WebGLRenderingContext.prototype.getParameter;
     WebGLRenderingContext.prototype.getParameter = function (parameter) {
-      if (parameter === 37446) return 'Intel Inc.'; // VENDOR
-      if (parameter === 37447) return 'Intel Iris OpenGL Engine'; // RENDERER
+      if (parameter === 37446) return 'Intel Inc.';
+      if (parameter === 37447) return 'Intel Iris OpenGL Engine';
       return getParameter.apply(this, arguments);
     };
   });
 }
 
-// Enhanced human-like scrolling with pauses and varied patterns
 async function humanScroll(page) {
   const maxScroll = await page.evaluate(() => document.body.scrollHeight);
   let currentY = 0;
   const viewportHeight = randomBetween(600, 900);
 
-  // Scroll down with pauses
   while (currentY < maxScroll) {
     const step = randomBetween(50, 200);
     currentY = Math.min(currentY + step, maxScroll);
     await page.evaluate(_y => window.scrollTo(0, _y), currentY);
     await delay(randomBetween(100, 300));
-    if (Math.random() < 0.2) await delay(randomBetween(500, 1500)); // Random pause
+    if (Math.random() < 0.2) await delay(randomBetween(500, 1500));
   }
 
-  // Scroll up partially
   currentY = Math.max(currentY - randomBetween(viewportHeight / 2, viewportHeight), 0);
   await page.evaluate(_y => window.scrollTo(0, _y), currentY);
   await delay(randomBetween(200, 600));
 
-  await delay(randomBetween(500, 2000)); // Final pause
+  await delay(randomBetween(500, 2000));
 }
 
-// Enhanced random click targeting interactive elements
 async function randomClick(page) {
   const elements = await page.$$('a, button, [role="button"], [onclick]');
   if (elements.length > 0 && Math.random() < 0.7) {
@@ -103,7 +94,6 @@ async function randomClick(page) {
       console.log(`Clicked interactive element at (${x}, ${y})`);
     }
   } else {
-    // Fallback to random click if no interactive elements or to vary behavior
     const x = randomBetween(50, 1200);
     const y = randomBetween(100, 700);
     await page.mouse.move(x, y, { steps: randomBetween(5, 10) });
@@ -114,18 +104,19 @@ async function randomClick(page) {
   await delay(randomBetween(200, 500));
 }
 
-// New function for additional human-like interactions
 async function humanInteraction(page) {
-  // Hover over a random element
   const hoverableElements = await page.$$('a, button, div, img');
   if (hoverableElements.length > 0 && Math.random() < 0.8) {
     const randomElement = hoverableElements[randomBetween(0, hoverableElements.length - 1)];
-    await randomElement.hover();
-    console.log('Hovered over an element');
-    await delay(randomBetween(200, 600));
+    try {
+      await randomElement.hover({ timeout: 5000 }); // Reduced timeout to avoid long waits
+      console.log('Hovered over an element');
+      await delay(randomBetween(200, 600));
+    } catch (e) {
+      console.log(`Hover failed: ${e.message}`);
+    }
   }
 
-  // Type in an input field if available
   const input = await page.$('input[type="text"], input[type="search"]');
   if (input && Math.random() < 0.5) {
     const searchTerms = ['test query', 'example', 'search term', 'hello world'];
@@ -135,14 +126,73 @@ async function humanInteraction(page) {
     await delay(randomBetween(500, 1500));
   }
 
-  // Click another interactive element
   if (Math.random() < 0.3) {
     await randomClick(page);
   }
 }
 
+// New function to detect and close pop-ups
+async function handlePopUp(page) {
+  try {
+    // Common selectors for pop-ups/modals
+    const popUpSelectors = [
+      'div[class*="modal"]',
+      'div[class*="popup"]',
+      'div[class*="overlay"]',
+      'div[id*="modal"]',
+      'div[id*="popup"]',
+      'div[role="dialog"]',
+      'div[aria-modal="true"]'
+    ].join(', ');
+
+    const popUp = await page.$(popUpSelectors);
+    if (popUp) {
+      console.log('Pop-up detected');
+      // Look for close buttons
+      const closeButtonSelectors = [
+        'button[class*="close"]',
+        'button[aria-label*="close"]',
+        'button[aria-label*="dismiss"]',
+        'a[class*="close"]',
+        'div[class*="close"]',
+        'button[id*="close"]',
+        'span[class*="close"]',
+        '[onclick*="close"]',
+        'button:has(svg)', // Common for icon-based close buttons
+        'button:near([class*="modal"], 50)', // Close buttons near modals
+        '[class*="modal"] button' // Any button inside modal
+      ].join(', ');
+
+      const closeButton = await popUp.$(closeButtonSelectors);
+      if (closeButton) {
+        const boundingBox = await closeButton.boundingBox();
+        if (boundingBox) {
+          const x = boundingBox.x + boundingBox.width / 2;
+          const y = boundingBox.y + boundingBox.height / 2;
+          await page.mouse.move(x, y, { steps: 5 });
+          await delay(randomBetween(50, 150));
+          await closeButton.click();
+          console.log('Closed pop-up via close button');
+          await delay(1000); // Wait for pop-up to close
+          return true;
+        }
+      }
+
+      // Fallback: Try pressing Escape key
+      await page.keyboard.press('Escape');
+      console.log('Attempted to close pop-up with Escape key');
+      await delay(1000);
+      return true;
+    }
+    console.log('No pop-up detected');
+    return false;
+  } catch (e) {
+    console.log(`Error handling pop-up: ${e.message}`);
+    return false;
+  }
+}
+
 async function interactWithUrl(proxy, userAgent, url) {
-  // Randomize viewport size for varied fingerprints
   const width = randomBetween(1280, 1440);
   const height = randomBetween(720, 900);
   const context = await firefox.launchPersistentContext('', {
@@ -164,9 +214,13 @@ async function interactWithUrl(proxy, userAgent, url) {
     } else {
       console.log(`Loaded: ${url}`);
       await delay(15000);
+
+      // Check and close pop-up before interactions
+      await handlePopUp(page);
+
       await humanScroll(page);
       await randomClick(page);
-      await humanInteraction(page); // Added human-like interactions
+      await humanInteraction(page);
     }
   } catch (e) {
     console.log(`Error with proxy ${proxy}:`, e.message);

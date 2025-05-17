@@ -18,9 +18,9 @@ jobs:
       - name: Start Xvfb (Simulate GUI)
         run: Xvfb :99 -screen 0 1920x1080x24 &
 
-      - name: Install Dependencies (Playwright + Axios)
+      - name: Install Dependencies (Playwright, Axios, Proxy Agent)
         run: |
-          npm install playwright axios
+          npm install playwright axios https-proxy-agent
           npx playwright install firefox
 
       - name: Run main.js once

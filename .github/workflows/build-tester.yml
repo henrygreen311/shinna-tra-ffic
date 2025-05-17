@@ -18,9 +18,9 @@ jobs:
       - name: Start Xvfb (Simulate GUI)
         run: Xvfb :99 -screen 0 1920x1080x24 &
 
-      - name: Install Playwright with Firefox
+      - name: Install Dependencies (Playwright + Axios)
         run: |
-          npm install playwright
+          npm install playwright axios
           npx playwright install firefox
 
       - name: Run main.js once

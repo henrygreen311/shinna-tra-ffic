@@ -1,1 +1,32 @@
+name: Traffic-1
 
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */5 * * *" # Runs every 5 hours on the hour
+
+jobs:
+  run-traffic:
+    runs-on: ubuntu-latest
+    env:
+      DISPLAY: ':99.0'
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Start Xvfb (Simulate GUI)
+        run: Xvfb :99 -screen 0 1920x1080x24 &
+
+      - name: Install Playwright with Firefox
+        run: |
+          npm install playwright
+          npx playwright install firefox
+
+      - name: Run main.js once
+        run: node main.js
+
+      - name: Wait for 5 hours and 30 minutes before exiting
+        run: |
+          echo "Waiting 5 hours and 30 minutes before exiting..."
+          sleep $((5 * 60 * 60 + 30 * 60))

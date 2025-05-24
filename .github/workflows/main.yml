@@ -44,3 +44,6 @@ jobs:
           pkill -f Xvfb || true
           echo "Job completed, exiting with status 0"
           exit 0
+
+       env:
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

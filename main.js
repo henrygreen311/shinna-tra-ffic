@@ -1,6 +1,6 @@
 const fs = require('fs');
 const { firefox } = require('playwright');
-const { execSync } = require('child_process'); // Added for git commands
+const { execSync } = require('child_process');
 
 const targetUrl = 'https://m.betking.com/virtual/league/kings-league/results';
 const apiUrlPart = '/api/virtuals/l/feeds/online/v1/categories/2/results/';
@@ -66,28 +66,27 @@ function updateHistoricalData(results) {
   console.log(`Saved ${results.length} match(es) to ${outputFile}`);
 }
 
-// Commit and push changes to the repository
-function commitAndPush() {
+// Git commit and push changes
+function gitCommitAndPush() {
   try {
     execSync('git config user.name "github-actions[bot]"');
     execSync('git config user.email "github-actions[bot]@users.noreply.github.com"');
-    execSync('git add API.txt historical.json || true');
-    const diffOutput = execSync('git diff --cached --quiet', { encoding: 'utf8', stdio: ['inherit', 'pipe', 'inherit'] });
-    if (diffOutput !== '') {
-      execSync('git commit -m "Update API.txt and historical.json [automated commit]"');
-      execSync('git push');
-      console.log('Committed and pushed changes to repository');
+    execSync('git add historical.json API.txt');
+    execSync('git commit -m "Update historical data and API tracking [skip ci]"');
+    execSync('git push');
+    console.log('Changes pushed to remote repository.');
+  } catch (error) {
+    if (error.message.includes('nothing to commit')) {
+      console.log('No changes to commit.');
     } else {
-      console.log('No changes to commit');
+      console.error('Git push failed:', error.message);
     }
-  } catch (err) {
-    console.error('Error during commit and push:', err.message);
   }
 }
 
 // Main polling function
 async function pollAndCapture() {
-  console.log(`[${new Date().toISOString()}] Starting capture session **`);
+  console.log(`[${new Date().toISOString()}] Starting capture session...`);
 
   const browser = await firefox.launch({ headless: true });
   const context = await browser.newContext();
@@ -112,7 +111,10 @@ async function pollAndCapture() {
         updateHistoricalData(data?.Results || []);
         saveLastApiUrl(capturedUrl);
         console.log(`New API response saved from: ${capturedUrl}`);
-        commitAndPush(); // Commit and push after updating files
+
+        // Commit and push after saving files
+        gitCommitAndPush();
+
       } catch (err) {
         console.error('Error parsing or saving API response:', err.message);
       }

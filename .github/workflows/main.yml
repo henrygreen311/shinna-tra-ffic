@@ -1,0 +1,53 @@
+name: Traffic-1
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */5 * * *" # Runs every 5 hours on the hour
+
+jobs:
+  run-traffic:
+    runs-on: ubuntu-latest
+    env:
+      DISPLAY: ':99.0'
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Start Xvfb (Simulate GUI)
+        run: |
+          Xvfb :99 -screen 0 1920x1080x24 &
+          echo "Xvfb started with PID $!"
+
+      - name: Install Dependencies (Playwright, Axios, Proxy Agent)
+        run: |
+          npm install playwright axios https-proxy-agent
+          npx playwright install firefox
+
+      - name: Run main.js with timeout
+        run: |
+          # Run main.js with a timeout of 5 hours 30 minutes (19800 seconds)
+          timeout 19800 node main.js || {
+            echo "main.js completed or was terminated after 5h30m"
+            exit 0
+          }
+
+      - name: Commit and Push API and Historical Files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add API.txt historical.json || true
+          git diff --cached --quiet && echo "No changes to commit" || {
+            git commit -m "Update API.txt and historical.json [automated commit]"
+            git push
+          }
+
+      - name: Clean up Xvfb
+        if: always() # Run even if previous steps fail
+        run: |
+          echo "Cleaning up Xvfb..."
+          pkill -f Xvfb || true
+          echo "Job completed, exiting with status 0"
+          exit 0

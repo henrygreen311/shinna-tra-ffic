@@ -66,14 +66,28 @@ function updateHistoricalData(results) {
   console.log(`Saved ${results.length} match(es) to ${outputFile}`);
 }
 
-// Git commit and push changes
+// Git commit and push changes with GitHub token authentication
 function gitCommitAndPush() {
   try {
+    const token = process.env.GITHUB_TOKEN;
+    if (!token) {
+      throw new Error('GITHUB_TOKEN environment variable is not set');
+    }
+
     execSync('git config user.name "github-actions[bot]"');
     execSync('git config user.email "github-actions[bot]@users.noreply.github.com"');
     execSync('git add historical.json API.txt');
     execSync('git commit -m "Update historical data and API tracking [skip ci]"');
-    execSync('git push');
+
+    // Get remote URL and insert token for authentication
+    const remoteUrl = execSync('git config --get remote.origin.url').toString().trim();
+    const authUrl = remoteUrl.replace(
+      /^https:\/\/github.com\//,
+      `https://${token}@github.com/`
+    );
+
+    execSync(`git push ${authUrl}`);
+
     console.log('Changes pushed to remote repository.');
   } catch (error) {
     if (error.message.includes('nothing to commit')) {

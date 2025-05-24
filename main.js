@@ -145,4 +145,4 @@ async function pollAndCapture() {
       console.error('Scheduled polling error:', err.message);
     }
   }, intervalMs);
-})(
+})();

@@ -5,6 +5,10 @@ on:
   schedule:
     - cron: "0 */5 * * *" # Runs every 5 hours on the hour
 
+concurrency:
+  group: traffic-1
+  cancel-in-progress: true
+
 jobs:
   run-traffic:
     runs-on: ubuntu-latest

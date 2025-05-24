@@ -63,7 +63,7 @@ function updateHistoricalData(results) {
   });
 
   fs.writeFileSync(outputFile, JSON.stringify(historical, null, 2));
-  console.log(`Saved ${results.length} match(es) to ${outputFile}`);
+  //console.log(`Saved ${results.length} match(es) to ${outputFile}`);
 }
 
 // Git commit and push changes with GitHub token authentication
@@ -88,7 +88,7 @@ function gitCommitAndPush() {
 
     execSync(`git push ${authUrl}`);
 
-    console.log('Changes pushed to remote repository.');
+    //console.log('Changes pushed to remote repository.');
   } catch (error) {
     if (error.message.includes('nothing to commit')) {
       console.log('No changes to commit.');
@@ -116,7 +116,7 @@ async function pollAndCapture() {
 
       const lastUrl = loadLastApiUrl();
       if (lastUrl === capturedUrl) {
-        console.log('Duplicate API response detected â skipping save.');
+        console.log('Duplicate API response skipping save.');
         return;
       }
 
@@ -124,7 +124,7 @@ async function pollAndCapture() {
         const data = await response.json();
         updateHistoricalData(data?.Results || []);
         saveLastApiUrl(capturedUrl);
-        console.log(`New API response saved from: ${capturedUrl}`);
+        //console.log(`New API response saved from: ${capturedUrl}`);
 
         // Commit and push after saving files
         gitCommitAndPush();
@@ -139,7 +139,7 @@ async function pollAndCapture() {
   await page.waitForTimeout(10000); // Wait for requests to complete
 
   await browser.close();
-  console.log('Capture session complete.\n');
+  //console.log('Capture session complete.\n');
 }
 
 // Run immediately, then repeat every 3 minutes

@@ -37,17 +37,6 @@ jobs:
             exit 0
           }
 
-      - name: Commit and Push API and Historical Files
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          git add API.txt historical.json || true
-          git diff --cached --quiet && echo "No changes to commit" || {
-            git commit -m "Update API.txt and historical.json [automated commit]"
-            git push
-          }
-
       - name: Clean up Xvfb
         if: always() # Run even if previous steps fail
         run: |

@@ -130,4 +130,4 @@ async function pollAndCapture() {
 (async () => {
   await pollAndCapture();
   setInterval(pollAndCapture, intervalMs);
-})(
+})();

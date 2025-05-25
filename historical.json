@@ -40692,6 +40692,56 @@
         "MatchID": 15283311,
         "MatchName": "BRE - TOT",
         "score": "0 - 3"
+      },
+      {
+        "MatchID": 15283283,
+        "MatchName": "BOU - FUL",
+        "score": "1 - 1"
+      },
+      {
+        "MatchID": 15283286,
+        "MatchName": "SOU - BHA",
+        "score": "0 - 2"
+      },
+      {
+        "MatchID": 15283289,
+        "MatchName": "WHU - LEI",
+        "score": "1 - 1"
+      },
+      {
+        "MatchID": 15283293,
+        "MatchName": "AST - CRY",
+        "score": "2 - 1"
+      },
+      {
+        "MatchID": 15283296,
+        "MatchName": "CHE - WOL",
+        "score": "1 - 1"
+      },
+      {
+        "MatchID": 15283299,
+        "MatchName": "IPS - EVE",
+        "score": "1 - 0"
+      },
+      {
+        "MatchID": 15283302,
+        "MatchName": "LIV - MNC",
+        "score": "2 - 3"
+      },
+      {
+        "MatchID": 15283305,
+        "MatchName": "NOT - MNU",
+        "score": "1 - 1"
+      },
+      {
+        "MatchID": 15283308,
+        "MatchName": "ARS - NEW",
+        "score": "3 - 2"
+      },
+      {
+        "MatchID": 15283311,
+        "MatchName": "BRE - TOT",
+        "score": "0 - 3"
       }
     ]
   },
@@ -41699,6 +41749,56 @@
         "MatchID": 15280627,
         "MatchName": "EVE - NOT",
         "score": "3 - 2"
+      },
+      {
+        "MatchID": 15283313,
+        "MatchName": "MNC - SOU",
+        "score": "3 - 1"
+      },
+      {
+        "MatchID": 15283315,
+        "MatchName": "LEI - BOU",
+        "score": "0 - 3"
+      },
+      {
+        "MatchID": 15283317,
+        "MatchName": "BHA - NOT",
+        "score": "0 - 0"
+      },
+      {
+        "MatchID": 15283319,
+        "MatchName": "CRY - WHU",
+        "score": "2 - 1"
+      },
+      {
+        "MatchID": 15283321,
+        "MatchName": "EVE - LIV",
+        "score": "1 - 3"
+      },
+      {
+        "MatchID": 15283323,
+        "MatchName": "TOT - ARS",
+        "score": "0 - 2"
+      },
+      {
+        "MatchID": 15283325,
+        "MatchName": "BRE - AST",
+        "score": "1 - 1"
+      },
+      {
+        "MatchID": 15283327,
+        "MatchName": "FUL - CHE",
+        "score": "0 - 0"
+      },
+      {
+        "MatchID": 15283329,
+        "MatchName": "NEW - IPS",
+        "score": "3 - 1"
+      },
+      {
+        "MatchID": 15283331,
+        "MatchName": "WOL - MNU",
+        "score": "3 - 3"
       },
       {
         "MatchID": 15283313,
@@ -43356,6 +43456,56 @@
         "MatchID": 15283351,
         "MatchName": "IPS - TOT",
         "score": "1 - 1"
+      },
+      {
+        "MatchID": 15283333,
+        "MatchName": "BOU - CRY",
+        "score": "2 - 2"
+      },
+      {
+        "MatchID": 15283335,
+        "MatchName": "CHE - LEI",
+        "score": "3 - 2"
+      },
+      {
+        "MatchID": 15283337,
+        "MatchName": "LIV - NEW",
+        "score": "0 - 2"
+      },
+      {
+        "MatchID": 15283339,
+        "MatchName": "BHA - MNC",
+        "score": "2 - 0"
+      },
+      {
+        "MatchID": 15283341,
+        "MatchName": "WHU - BRE",
+        "score": "0 - 0"
+      },
+      {
+        "MatchID": 15283343,
+        "MatchName": "ARS - AST",
+        "score": "0 - 1"
+      },
+      {
+        "MatchID": 15283345,
+        "MatchName": "NOT - WOL",
+        "score": "1 - 0"
+      },
+      {
+        "MatchID": 15283347,
+        "MatchName": "MNU - FUL",
+        "score": "1 - 0"
+      },
+      {
+        "MatchID": 15283349,
+        "MatchName": "SOU - EVE",
+        "score": "0 - 1"
+      },
+      {
+        "MatchID": 15283351,
+        "MatchName": "IPS - TOT",
+        "score": "1 - 1"
       }
     ]
   },
@@ -44363,6 +44513,56 @@
         "MatchID": 15280670,
         "MatchName": "CHE - NOT",
         "score": "2 - 2"
+      },
+      {
+        "MatchID": 15283353,
+        "MatchName": "NEW - SOU",
+        "score": "0 - 3"
+      },
+      {
+        "MatchID": 15283355,
+        "MatchName": "BRE - BOU",
+        "score": "1 - 2"
+      },
+      {
+        "MatchID": 15283357,
+        "MatchName": "TOT - LIV",
+        "score": "1 - 3"
+      },
+      {
+        "MatchID": 15283359,
+        "MatchName": "EVE - BHA",
+        "score": "1 - 0"
+      },
+      {
+        "MatchID": 15283361,
+        "MatchName": "LEI - MNU",
+        "score": "0 - 2"
+      },
+      {
+        "MatchID": 15283363,
+        "MatchName": "MNC - NOT",
+        "score": "4 - 0"
+      },
+      {
+        "MatchID": 15283365,
+        "MatchName": "AST - IPS",
+        "score": "5 - 1"
+      },
+      {
+        "MatchID": 15283367,
+        "MatchName": "CRY - CHE",
+        "score": "1 - 1"
+      },
+      {
+        "MatchID": 15283369,
+        "MatchName": "FUL - WOL",
+        "score": "2 - 0"
+      },
+      {
+        "MatchID": 15283371,
+        "MatchName": "ARS - WHU",
+        "score": "1 - 0"
       },
       {
         "MatchID": 15283353,
@@ -45820,6 +46020,56 @@
         "MatchID": 15283395,
         "MatchName": "CHE - BRE",
         "score": "2 - 0"
+      },
+      {
+        "MatchID": 15283373,
+        "MatchName": "MNU - CRY",
+        "score": "3 - 2"
+      },
+      {
+        "MatchID": 15283375,
+        "MatchName": "LIV - AST",
+        "score": "2 - 0"
+      },
+      {
+        "MatchID": 15283377,
+        "MatchName": "WOL - LEI",
+        "score": "1 - 0"
+      },
+      {
+        "MatchID": 15283379,
+        "MatchName": "SOU - TOT",
+        "score": "1 - 2"
+      },
+      {
+        "MatchID": 15283381,
+        "MatchName": "MNC - EVE",
+        "score": "3 - 0"
+      },
+      {
+        "MatchID": 15283384,
+        "MatchName": "BOU - ARS",
+        "score": "1 - 2"
+      },
+      {
+        "MatchID": 15283387,
+        "MatchName": "IPS - WHU",
+        "score": "1 - 1"
+      },
+      {
+        "MatchID": 15283389,
+        "MatchName": "BHA - NEW",
+        "score": "3 - 1"
+      },
+      {
+        "MatchID": 15283392,
+        "MatchName": "NOT - FUL",
+        "score": "0 - 0"
+      },
+      {
+        "MatchID": 15283395,
+        "MatchName": "CHE - BRE",
+        "score": "2 - 0"
       }
     ]
   },
@@ -46877,6 +47127,56 @@
         "MatchID": 15280695,
         "MatchName": "BHA - MNU",
         "score": "1 - 3"
+      },
+      {
+        "MatchID": 15283398,
+        "MatchName": "TOT - BHA",
+        "score": "1 - 0"
+      },
+      {
+        "MatchID": 15283401,
+        "MatchName": "CRY - WOL",
+        "score": "2 - 1"
+      },
+      {
+        "MatchID": 15283404,
+        "MatchName": "LEI - FUL",
+        "score": "2 - 0"
+      },
+      {
+        "MatchID": 15283407,
+        "MatchName": "EVE - NOT",
+        "score": "3 - 0"
+      },
+      {
+        "MatchID": 15283410,
+        "MatchName": "BRE - MNU",
+        "score": "1 - 3"
+      },
+      {
+        "MatchID": 15283413,
+        "MatchName": "AST - SOU",
+        "score": "2 - 0"
+      },
+      {
+        "MatchID": 15283416,
+        "MatchName": "WHU - LIV",
+        "score": "2 - 1"
+      },
+      {
+        "MatchID": 15283419,
+        "MatchName": "IPS - BOU",
+        "score": "3 - 1"
+      },
+      {
+        "MatchID": 15283421,
+        "MatchName": "ARS - CHE",
+        "score": "3 - 0"
+      },
+      {
+        "MatchID": 15283424,
+        "MatchName": "NEW - MNC",
+        "score": "2 - 0"
       },
       {
         "MatchID": 15283398,
@@ -48134,6 +48434,56 @@
         "MatchID": 15283454,
         "MatchName": "MNC - TOT",
         "score": "2 - 1"
+      },
+      {
+        "MatchID": 15283427,
+        "MatchName": "WOL - BRE",
+        "score": "0 - 0"
+      },
+      {
+        "MatchID": 15283430,
+        "MatchName": "BHA - AST",
+        "score": "1 - 2"
+      },
+      {
+        "MatchID": 15283433,
+        "MatchName": "NOT - LEI",
+        "score": "4 - 2"
+      },
+      {
+        "MatchID": 15283436,
+        "MatchName": "FUL - CRY",
+        "score": "2 - 1"
+      },
+      {
+        "MatchID": 15283439,
+        "MatchName": "MNU - ARS",
+        "score": "0 - 1"
+      },
+      {
+        "MatchID": 15283442,
+        "MatchName": "SOU - WHU",
+        "score": "1 - 3"
+      },
+      {
+        "MatchID": 15283445,
+        "MatchName": "EVE - NEW",
+        "score": "3 - 0"
+      },
+      {
+        "MatchID": 15283448,
+        "MatchName": "LIV - BOU",
+        "score": "0 - 1"
+      },
+      {
+        "MatchID": 15283451,
+        "MatchName": "CHE - IPS",
+        "score": "2 - 1"
+      },
+      {
+        "MatchID": 15283454,
+        "MatchName": "MNC - TOT",
+        "score": "2 - 1"
       }
     ]
   },
@@ -49191,6 +49541,56 @@
         "MatchID": 15283483,
         "MatchName": "CRY - LEI",
         "score": "4 - 0"
+      },
+      {
+        "MatchID": 15283456,
+        "MatchName": "WHU - BHA",
+        "score": "2 - 3"
+      },
+      {
+        "MatchID": 15283459,
+        "MatchName": "ARS - WOL",
+        "score": "1 - 2"
+      },
+      {
+        "MatchID": 15283462,
+        "MatchName": "BRE - FUL",
+        "score": "5 - 1"
+      },
+      {
+        "MatchID": 15283465,
+        "MatchName": "BOU - SOU",
+        "score": "1 - 2"
+      },
+      {
+        "MatchID": 15283468,
+        "MatchName": "TOT - EVE",
+        "score": "2 - 1"
+      },
+      {
+        "MatchID": 15283471,
+        "MatchName": "NEW - NOT",
+        "score": "0 - 0"
+      },
+      {
+        "MatchID": 15283474,
+        "MatchName": "AST - MNC",
+        "score": "1 - 3"
+      },
+      {
+        "MatchID": 15283477,
+        "MatchName": "LIV - CHE",
+        "score": "0 - 0"
+      },
+      {
+        "MatchID": 15283480,
+        "MatchName": "IPS - MNU",
+        "score": "4 - 2"
+      },
+      {
+        "MatchID": 15283483,
+        "MatchName": "CRY - LEI",
+        "score": "4 - 0"
       }
     ]
   },
@@ -50198,6 +50598,56 @@
         "MatchID": 15280726,
         "MatchName": "EVE - BRE",
         "score": "1 - 1"
+      },
+      {
+        "MatchID": 15283486,
+        "MatchName": "WOL - IPS",
+        "score": "3 - 2"
+      },
+      {
+        "MatchID": 15283489,
+        "MatchName": "FUL - ARS",
+        "score": "0 - 0"
+      },
+      {
+        "MatchID": 15283493,
+        "MatchName": "LEI - BRE",
+        "score": "3 - 2"
+      },
+      {
+        "MatchID": 15283496,
+        "MatchName": "MNC - WHU",
+        "score": "3 - 0"
+      },
+      {
+        "MatchID": 15283499,
+        "MatchName": "BHA - BOU",
+        "score": "0 - 1"
+      },
+      {
+        "MatchID": 15283502,
+        "MatchName": "NOT - CRY",
+        "score": "2 - 2"
+      },
+      {
+        "MatchID": 15283505,
+        "MatchName": "MNU - LIV",
+        "score": "1 - 1"
+      },
+      {
+        "MatchID": 15283508,
+        "MatchName": "SOU - CHE",
+        "score": "0 - 1"
+      },
+      {
+        "MatchID": 15283511,
+        "MatchName": "EVE - AST",
+        "score": "2 - 2"
+      },
+      {
+        "MatchID": 15283514,
+        "MatchName": "NEW - TOT",
+        "score": "0 - 0"
       }
     ]
   },

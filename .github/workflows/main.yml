@@ -1,0 +1,58 @@
+name: Traffic-1
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */6 * * *"   # Triggers every 6 hours at minute 0
+
+jobs:
+  run-traffic:
+    runs-on: ubuntu-latest
+    env:
+      DISPLAY: ':99.0'
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Start Xvfb (Simulate GUI)
+        run: |
+          Xvfb :99 -screen 0 1920x1080x24 &
+          echo "Xvfb started with PID $!"
+
+      - name: Install Dependencies (Playwright)
+        run: |
+          npm install playwright
+          npx playwright install firefox
+
+      - name: Run main.js with timeout
+        run: |
+          # Run main.js with a timeout of 5 hours 30 minutes (19800 seconds)
+          timeout 19800 node main.js || {
+            echo "main.js completed or was terminated after 5h30m"
+            exit 0
+          }
+
+      - name: Commit & Push Updated session.json
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          if [ -f session.json ]; then
+            git add session.json
+            git commit -m "Update session.json after successful login" || echo "No changes to commit"
+            git push origin HEAD || echo "Nothing to push"
+          else
+            echo "session.json not found, skipping commit"
+          fi
+
+      - name: Clean up Xvfb
+        if: always()
+        run: |
+          echo "Cleaning up Xvfb..."
+          pkill -f Xvfb || true
+          echo "Job completed, exiting with status 0"
+          exit 0
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

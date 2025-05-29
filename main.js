@@ -66,42 +66,45 @@ const { firefox } = require('playwright');
     .map(url => url.trim())
     .filter(url => url.length > 0);
 
+  // Function to get random URL
+  const getRandomUrl = (urls) => {
+    const randomIndex = Math.floor(Math.random() * urls.length);
+    return urls[randomIndex];
+  };
+
   // Loop through pages forever
   while (true) {
-    for (const url of urls) {
-      console.log(`Navigating to: ${url}`);
-      await page.goto(url, { waitUntil: 'domcontentloaded' });
-      await page.waitForTimeout(10000);
+    const url = getRandomUrl(urls);
+    console.log(`Navigating to: ${url}`);
+    await page.goto(url, { waitUntil: 'domcontentloaded' });
+    await page.waitForTimeout(10000);
 
-      let commentPosted = false;
+    let commentPosted = false;
 
-      for (let i = 0; i < 5; i++) {
-        try {
-          const commentBox = await page.$('[contenteditable="true"]:has(p:has(br))');
-          if (commentBox) {
-            await commentBox.click({ force: true });
-            await page.keyboard.insertText(commentText);
-            await page.keyboard.press('Enter');
-            console.log(`Comment posted on: ${url}`);
-            commentPosted = true;
-            break;
-          }
-        } catch (err) {
-          // Silently retry
+    for (let i = 0; i < 5; i++) {
+      try {
+        const commentBox = await page.$('[contenteditable="true"]:has(p:has(br))');
+        if (commentBox) {
+          await commentBox.click({ force: true });
+          await page.keyboard.insertText(commentText);
+          await page.keyboard.press('Enter');
+          console.log(`Comment posted on: ${url}`);
+          commentPosted = true;
+          break;
         }
-
-        await page.evaluate(() => window.scrollBy(0, window.innerHeight));
-        await page.waitForTimeout(3000);
+      } catch (err) {
+        // Silently retry
       }
 
-      if (!commentPosted) {
-        console.warn(`No comment box found on: ${url} after 5 scroll attempts.`);
-      }
-
-      await page.waitForTimeout(1200000);
+      await page.evaluate(() => window.scrollBy(0, window.innerHeight));
+      await page.waitForTimeout(3000);
     }
 
-    console.log('Restarting loop from beginning of page.txt...');
+    if (!commentPosted) {
+      console.warn(`No comment box found on: ${url} after 5 scroll attempts.`);
+    }
+
+    await page.waitForTimeout(1200000);
   }
 
   // Unreachable, but safe cleanup if loop ends

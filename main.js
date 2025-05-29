@@ -12,12 +12,13 @@ const { firefox } = require('playwright');
 
   const page = await context.newPage();
   await page.goto(profileURL);
-  await page.waitForTimeout(10000); // Wait for session-based login
+  await page.waitForTimeout(10000); // Allow time for session-based login
 
   const currentURL = page.url();
 
-  if (!currentURL.startsWith(profileURL)) {
+  if (!currentURL.startsWith('https://web.facebook.com')) {
     console.error('Login check failed via session.');
+    console.error(`Current URL: ${currentURL}`);
     await page.screenshot({ path: 'failed-login.png', fullPage: true });
     await browser.close();
     return;

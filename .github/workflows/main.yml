@@ -27,7 +27,7 @@ jobs:
 
       - name: Run main.js with timeout
         run: |
-          # Run main.js with a timeout of 5 hours 30 minutes (19800 seconds)
+          # Run main.js with a timeout of 5 hours 40 minutes (20400 seconds)
           timeout 19800 node main.js || {
             echo "main.js completed or was terminated after 5h30m"
             exit 0

@@ -2,10 +2,10 @@ const fs = require('fs');
 const { firefox } = require('playwright');
 
 (async () => {
-  const sessionPath = './session.json';
+  const sessionPath = 'session.json';
   const profileURL = 'https://web.facebook.com/profile.php';
-  const pageListPath = './page.txt';
-  const commentPath = './comment.txt';
+  const pageListPath = 'page.txt';
+  const commentPath = 'comment.txt';
 
   // Read comment from comment.txt
   if (!fs.existsSync(commentPath)) {

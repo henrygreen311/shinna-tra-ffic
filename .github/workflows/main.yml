@@ -3,7 +3,7 @@ name: Traffic-1
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 */6 * * *"
+    - cron: "0 */6 * * *"   # Triggers every 6 hours at minute 0
 
 jobs:
   run-traffic:
@@ -27,18 +27,24 @@ jobs:
 
       - name: Run main.js with timeout
         run: |
-          timeout 20400 node main.js || {
-            echo "main.js completed or was terminated after 5h40m"
+          # Run main.js with a timeout of 5 hours 40 minutes (20400 seconds)
+          timeout 19800 node main.js || {
+            echo "main.js completed or was terminated after 5h30m"
             exit 0
           }
 
-      - name: Upload Screenshot if Login Fails
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: failed-login-screenshot
-          path: failed-login.png
-          if-no-files-found: ignore
+      - name: Commit & Push Updated session.json
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          if [ -f session.json ]; then
+            git add session.json
+            git commit -m "Update session.json after successful login" || echo "No changes to commit"
+            git push origin HEAD || echo "Nothing to push"
+          else
+            echo "session.json not found, skipping commit"
+          fi
 
       - name: Clean up Xvfb
         if: always()

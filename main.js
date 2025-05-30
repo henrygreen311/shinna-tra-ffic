@@ -3,7 +3,7 @@ const { firefox } = require('playwright');
 
 (async () => {
   const sessionPath = './session.json';
-  const profileURL = 'https://www.facebook.com/profile.php';
+  const profileURLs = ['https://web.facebook.com/profile.php', 'https://www.facebook.com/profile.php']; // Array of valid profile URLs
   const pageListPath = './page.txt';
   const commentPath = './comment.txt';
 
@@ -20,24 +20,24 @@ const { firefox } = require('playwright');
     : await browser.newContext();
 
   const page = await context.newPage();
-  await page.goto(profileURL);
+  await page.goto(profileURLs[0]); // Navigate to one of the profile URLs initially
   await page.waitForTimeout(10000);
 
   let currentURL = page.url();
 
   // Handle login fallback
-  if (!currentURL.startsWith(profileURL)) {
+  if (!profileURLs.some(url => currentURL.startsWith(url))) { // Check if current URL matches any profile URL
     console.warn('Login check failed. Attempting manual login...');
     try {
       await page.fill('input[name="email"]', '07076120343');
       await page.fill('input[name="pass"]', 'Henry311@');
       await page.click('button[name="login"]');
       await page.waitForTimeout(10000);
-      await page.goto(profileURL);
+      await page.goto(profileURLs[0]); // Try navigating to the first profile URL again
       await page.waitForTimeout(5000);
       currentURL = page.url();
 
-      if (currentURL.startsWith(profileURL)) {
+      if (profileURLs.some(url => currentURL.startsWith(url))) { // Verify login against both URLs
         console.log('Manual login successful. Updating session...');
         await context.storageState({ path: sessionPath });
       } else {

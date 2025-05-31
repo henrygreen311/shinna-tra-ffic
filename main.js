@@ -7,12 +7,26 @@ const { firefox } = require('playwright');
   const pageListPath = './page.txt';
   const commentPath = './comment.txt';
 
-  // Read comment from comment.txt
+  // Read comments from comment.txt
   if (!fs.existsSync(commentPath)) {
     console.error('comment.txt not found.');
     return;
   }
-  const commentText = fs.readFileSync(commentPath, 'utf-8').trim();
+  const commentLines = fs.readFileSync(commentPath, 'utf-8')
+    .split('\n')
+    .map(line => line.trim())
+    .filter(line => line.length > 0);
+
+  if (commentLines.length === 0) {
+    console.error('No valid comments found in comment.txt.');
+    return;
+  }
+
+  // Function to get random comment
+  const getRandomComment = (comments) => {
+    const randomIndex = Math.floor(Math.random() * comments.length);
+    return comments[randomIndex];
+  };
 
   const browser = await firefox.launch({ headless: false });
   const context = fs.existsSync(sessionPath)
@@ -85,10 +99,11 @@ const { firefox } = require('playwright');
       try {
         const commentBox = await page.$('[contenteditable="true"]:has(p:has(br))');
         if (commentBox) {
+          const commentText = getRandomComment(commentLines); // Select a random comment
           await commentBox.click({ force: true });
           await page.keyboard.insertText(commentText);
           await page.keyboard.press('Enter');
-          console.log(`Comment posted on: ${url}`);
+          console.log(`Comment posted on: ${url}: ${commentText}`);
           commentPosted = true;
           break;
         }

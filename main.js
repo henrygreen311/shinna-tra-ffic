@@ -104,7 +104,7 @@ const { firefox } = require('playwright');
       console.warn(`No comment box found on: ${url} after 5 scroll attempts.`);
     }
 
-    await page.waitForTimeout(1200000);
+    await page.waitForTimeout(600000);
   }
 
   // Unreachable, but safe cleanup if loop ends

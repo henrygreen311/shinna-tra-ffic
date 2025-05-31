@@ -3,7 +3,7 @@ const { firefox } = require('playwright');
 
 (async () => {
   const sessionPath = './session.json';
-  const profileURLs = ['https://web.facebook.com/profile.php', 'https://www.facebook.com/profile.php']; // Array of valid profile URLs
+  const profileURLs = ['https://web.facebook.com/profile.php?id=61566984302826', 'https://www.facebook.com/profile.php?id=61566984302826']; // Array of valid profile URLs
   const pageListPath = './page.txt';
   const commentPath = './comment.txt';
 

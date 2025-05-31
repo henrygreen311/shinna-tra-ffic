@@ -15,6 +15,15 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Decompress facebook.tar.gz
+        run: |
+          if [ -f facebook.tar.gz ]; then
+            tar -xzf facebook.tar.gz -C .
+            echo "Decompressed facebook.tar.gz into ./facebook"
+          else
+            echo "facebook.tar.gz not found, skipping decompression"
+          fi
+
       - name: Start Xvfb (Simulate GUI)
         run: |
           Xvfb :99 -screen 0 1920x1080x24 &
@@ -27,24 +36,11 @@ jobs:
 
       - name: Run main.js with timeout
         run: |
-          # Run main.js with a timeout of 5 hours 40 minutes (20400 seconds)
+          # Run main.js with a timeout of 5 hours 30 minutes (19800 seconds)
           timeout 19800 node main.js || {
             echo "main.js completed or was terminated after 5h30m"
             exit 0
           }
-
-      - name: Commit & Push Updated session.json
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
-          if [ -f session.json ]; then
-            git add session.json
-            git commit -m "Update session.json after successful login" || echo "No changes to commit"
-            git push origin HEAD || echo "Nothing to push"
-          else
-            echo "session.json not found, skipping commit"
-          fi
 
       - name: Clean up Xvfb
         if: always()
